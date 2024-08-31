@@ -19,7 +19,7 @@ jobs:
           scope: '@tduzeero-packages'
       - uses: oven-sh/setup-bun@v2
       - name: Install dependencies
-        run: bun install && bun build
+        run: bun install && bun run build
       - name: Publish package
         run: yarn publish --access restricted
         env:
