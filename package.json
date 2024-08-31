@@ -1,0 +1,42 @@
+{
+  "name": "@tduzeero/common",
+  "module": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "version": "0.0.2",
+  "description": "A collection of common functions and features.",
+  "scripts": {
+    "build": "bun build --target=node ./src/index.ts --outfile=dist/index.js && bun run build:declaration",
+    "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json && tsc-alias",
+    "prebuild": "rm -rf dist",
+    "postbuild": "rm -rf tsconfig.types.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "tsc-alias": "^1.8.10",
+    "typescript": "^5.5.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.5.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tduzeero-packages/common.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "keywords": [
+    "common"
+  ],
+  "author": "Eduardo Segura <wxyzeero@gmail.com>",
+  "license": "GPL-3.0-only",
+  "files": [
+    "dist/*.js",
+    "dist/*.d.ts"
+  ],
+  "imports": {
+    "~/*": "./dist/*"
+  }
+}
