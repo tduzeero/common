@@ -1,8 +1,7 @@
 name: Release
 on:
-  release:
-    types:
-      - published
+  push:
+    tags: ["v*.*.*-release"]
 jobs:
   install:
     name: Install Dependencies
@@ -59,16 +58,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref || format('{0}{1}', 'refs/tags/', github.event.release.tag_name) }}
-      - uses: actions/cache@v4
-        id: build
-        with:
-          path: ./build/*
-          key: ${{ github.sha }}.build
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@tduzeero'
+      - uses: actions/cache@v4
+        id: build
+        with:
+          path: ./build/*
+          key: ${{ github.sha }}.build
       - name: Publish Package
         run: npm publish
         env:
