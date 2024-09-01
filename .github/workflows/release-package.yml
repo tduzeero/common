@@ -27,15 +27,16 @@ jobs:
     permissions: write-all
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
       - uses: actions/cache@v4
         id: node_modules
         with:
           path: ./node_modules/*
           key: ${{ github.sha }}.node_modules
-      - run: bun run build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - name: Build Project
+        run: bun run build
       - uses: actions/cache@v4
         id: build
         with:
@@ -48,17 +49,17 @@ jobs:
     permissions: write-all
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@tduzeero'
       - uses: actions/cache@v4
         id: build
         with:
           path: ./build/*
           key: ${{ github.sha }}.build
-      - name: Publish package
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@tduzeero'
+      - name: Publish Package
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
