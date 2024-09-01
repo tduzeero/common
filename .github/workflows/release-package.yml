@@ -56,6 +56,9 @@ jobs:
     permissions: write-all
     needs: [build]
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref || format('{0}{1}', 'refs/tags/', github.event.release.tag_name) }}
       - uses: actions/cache@v4
         id: build
         with:
