@@ -26,6 +26,7 @@ jobs:
     name: Build Project
     runs-on: ubuntu-latest
     permissions: write-all
+    needs: [install]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
@@ -48,6 +49,7 @@ jobs:
     name: Publish Package
     runs-on: ubuntu-latest
     permissions: write-all
+    needs: [build]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
