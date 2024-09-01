@@ -1,0 +1,64 @@
+name: Release
+on:
+  release:
+    types:
+      - published
+jobs:
+  install:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - uses: oven-sh/setup-bun@v2
+        run: bun install
+      - uses: actions/cache@v4
+        id: node_modules
+        with:
+          path: ./node_modules/*
+          key: ${{ github.sha }}.node_modules
+
+  build:
+    name: Build Project
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - uses: actions/cache@v4
+        id: node_modules
+        with:
+          path: ./node_modules/*
+          key: ${{ github.sha }}.node_modules
+      - run: bun run build
+      - uses: actions/cache@v4
+        id: build
+        with:
+          path: ./build/*
+          key: ${{ github.sha }}.build
+
+  publish:
+    name: Publish Package
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@tduzeero'
+      - uses: actions/cache@v4
+        id: build
+        with:
+          path: ./build/*
+          key: ${{ github.sha }}.build
+      - name: Publish package
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
