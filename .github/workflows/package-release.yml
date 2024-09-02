@@ -67,3 +67,18 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  cleanup:
+    name: Clean Up
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup
+        run: |
+          gh extension install actions/gh-actions-cache
+
+          set +e
+          echo "Deleting cache..."
+          cacheKey=${{ github.sha }}.cache-project
+          gh actions-cache delete $cacheKey --confirm
+          echo "Deleting cache... Done!"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
