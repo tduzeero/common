@@ -81,9 +81,9 @@ jobs:
           cacheKeysForPR=$(gh actions-cache list -L 100 | cut -f 1)
 
           set +e
+          echo "Deleting caches..."
           for cacheKey in $cacheKeysForPR
           do
-            echo "Deleting cache ${cacheKey}"
             gh actions-cache delete $cacheKey --confirm
           done
           echo "Done!"
