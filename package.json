@@ -3,7 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "main": "dist/index.js",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A collection of common functions and features.",
   "scripts": {
     "build": "bun build --target=node ./src/index.ts --outfile=dist/index.js && bun run build:declaration",
@@ -28,10 +28,7 @@
   ],
   "author": "Eduardo Segura <wxyzeero@gmail.com>",
   "license": "GPL-3.0-only",
-  "files": [
-    "dist/*.js",
-    "dist/*.d.ts"
-  ],
+  "files": [ "dist/*" ],
   "imports": {
     "~/*": "./dist/*"
   },
