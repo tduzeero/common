@@ -13,8 +13,8 @@ jobs:
         id: cache-project
         with:
           path: |
-            ~/node_modules/*
-            ~/dist/*
+            ./node_modules/*
+            ./dist/*
           key: ${{ github.sha }}.cache-project
       - uses: actions/setup-node@v4
         with:
@@ -34,8 +34,8 @@ jobs:
         id: cache-project
         with:
           path: |
-            ~/node_modules/*
-            ~/dist/*
+            ./node_modules/*
+            ./dist/*
           key: ${{ github.sha }}.cache-project
       - uses: actions/setup-node@v4
         with:
@@ -55,8 +55,8 @@ jobs:
         id: cache-project
         with:
           path: |
-            ~/node_modules/*
-            ~/dist/*
+            ./node_modules/*
+            ./dist/*
           key: ${{ github.sha }}.cache-project
       - uses: actions/setup-node@v4
         with:
