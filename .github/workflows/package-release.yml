@@ -77,10 +77,15 @@ jobs:
         run: |
           gh extension install actions/gh-actions-cache
 
+          echo "Fetching list of cache key"
+          cacheKeysForPR=$(gh actions-cache list -L 100 | cut -f 1)
+
           set +e
-          echo "Deleting cache..."
-          cacheKey=${{ github.sha }}.cache-project
-          gh actions-cache delete $cacheKey --confirm
-          echo "Deleting cache... Done!"
+          for cacheKey in $cacheKeysForPR
+          do
+            echo "Deleting cache ${cacheKey}"
+            gh actions-cache delete $cacheKey --confirm
+          done
+          echo "Done!"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
