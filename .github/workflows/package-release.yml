@@ -12,14 +12,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-      - uses: oven-sh/setup-bun@v2
-      - name: Install Project
-        run: bun install
       - uses: actions/cache@v4
         id: node_modules
         with:
           path: ./node_modules/*
           key: ${{ github.sha }}.node_modules
+      - uses: oven-sh/setup-bun@v2
+      - name: Install Project
+        run: bun install
 
   build:
     name: Build Project
@@ -33,17 +33,17 @@ jobs:
         with:
           path: ./node_modules/*
           key: ${{ github.sha }}.node_modules
+      - uses: actions/cache@v4
+        id: dist
+        with:
+          path: ./dist/*
+          key: ${{ github.sha }}.dist
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
       - uses: oven-sh/setup-bun@v2
       - name: Build Project
         run: bun run build
-      - uses: actions/cache@v4
-        id: build
-        with:
-          path: ./build/*
-          key: ${{ github.sha }}.build
 
   publish:
     name: Publish Package
@@ -52,16 +52,16 @@ jobs:
     needs: [build]
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        id: dist
+        with:
+          path: ./dist/*
+          key: ${{ github.sha }}.dist
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@tduzeero'
-      - uses: actions/cache@v4
-        id: build
-        with:
-          path: ./build/*
-          key: ${{ github.sha }}.build
       - name: Publish Package
         run: npm publish
         env:
