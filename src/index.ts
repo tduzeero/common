@@ -1,2 +1,2 @@
 
-export { default as alphabetUuidFn } from '~/functions/alphabetUuidFn';
+export * from '~/functions/alphabetUuidFn';

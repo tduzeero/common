@@ -9,14 +9,16 @@ jobs:
     permissions: write-all
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        id: cache-project
+        with:
+          path: |
+            ~/node_modules/*
+            ~/dist/*
+          key: ${{ github.sha }}.cache-project
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-      - uses: actions/cache@v4
-        id: node_modules
-        with:
-          path: ./node_modules/*
-          key: ${{ github.sha }}.node_modules
       - uses: oven-sh/setup-bun@v2
       - name: Install Project
         run: bun install
@@ -29,15 +31,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
-        id: node_modules
+        id: cache-project
         with:
-          path: ./node_modules/*
-          key: ${{ github.sha }}.node_modules
-      - uses: actions/cache@v4
-        id: dist
-        with:
-          path: ./dist/*
-          key: ${{ github.sha }}.dist
+          path: |
+            ~/node_modules/*
+            ~/dist/*
+          key: ${{ github.sha }}.cache-project
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
@@ -53,10 +52,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
-        id: dist
+        id: cache-project
         with:
-          path: ./dist/*
-          key: ${{ github.sha }}.dist
+          path: |
+            ~/node_modules/*
+            ~/dist/*
+          key: ${{ github.sha }}.cache-project
       - uses: actions/setup-node@v4
         with:
           scope: '@tduzeero'
