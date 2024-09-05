@@ -12,7 +12,6 @@
     "postbuild": "rm -rf tsconfig.types.tsbuildinfo"
   },
   "devDependencies": {
-    "@types/bun": "latest",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.5.4"
   },

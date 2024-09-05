@@ -52,6 +52,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
   cleanup:
     name: Clean Up
+    if: github.repository == 'octo-org/octo-repo-prod'
     runs-on: ubuntu-latest
     needs: [publish]
     steps:
