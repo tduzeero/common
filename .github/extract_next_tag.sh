@@ -8,6 +8,12 @@ MAJOR=$(echo $CURRENT_TAG_NUMBER | cut -d'.' -f 1)
 MINOR=$(echo $CURRENT_TAG_NUMBER | cut -d'.' -f 2)
 PATCH=$(echo $CURRENT_TAG_NUMBER | cut -d'.' -f 3)
 
+if [[ $CURRENT_TAG_NUMBER == "" ]]; then
+  MAJOR=0;
+  MINOR=0;
+  PATCH=1;
+fi
+
 OLDIFS="$IFS"
 IFS=$'\n'
 for COMMIT in $COMMITS_FROM_CURRENT_TAG; do
