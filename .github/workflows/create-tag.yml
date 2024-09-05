@@ -14,8 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: 
+          fetch-depth: 0
           fetch-tags: true
-      - name: Create Tag
         run: |
           USER_NAME="github-actions[bot]"
           USER_EMAIL="41898282+github-actions[bot]@users.noreply.github.com"
