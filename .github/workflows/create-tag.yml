@@ -1,0 +1,24 @@
+name: Create Tag
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  version:
+    name: Create Tag
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create Tag
+        run: |
+          NEXT_VERSION=$(bash ./.github/extract_next_tag.sh)
+
+          echo "Next Version: v${NEXT_VERSION}"
+          
+          git tag -a "v${NEXT_VERSION}"          
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
