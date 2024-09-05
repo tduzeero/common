@@ -6,19 +6,6 @@ on:
       cleanup:
         description: 'Clean Up'
         type: boolean
-      tags:
-        description: 'Test scenario tags'
-        required: true
-        type: string
-	    version:
-		    description: 'Version'
-		    required: true
-		    default: 'minor'
-		    type: choice
-		    options:
-		      - major
-		      - minor
-		      - patch
 jobs:
   build:
     name: Build Project
