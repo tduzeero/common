@@ -13,6 +13,8 @@ jobs:
     permissions: write-all
     steps:
       - uses: actions/checkout@v4
+        with: 
+          fetch-tags: true
       - name: Create Tag
         run: |
           USER_NAME="github-actions[bot]"
