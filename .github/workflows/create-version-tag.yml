@@ -1,0 +1,68 @@
+name: Create Version Tag
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+inputs:
+  user-from:
+    type: choice
+    description: 'User from'
+    required: true
+    default: 'github-bot'
+    options:
+      - 'github-bot'
+      - 'commit-head'
+  current-version:
+    description: 'Current version'
+    required: true
+    default: 'v0.0.1'
+  version-from:
+    type: choice
+    description: 'The type of the version'
+    required: true
+    default: 'git'
+    options:
+      - git
+      - version
+jobs:
+  version:
+    name: Create Tag Version
+    if: ${{ github.event.pull_request.merged }}
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
+          fetch-tags: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: tduzeero/actions/user/config@v1
+        with:
+          user-from: ${{ inputs.user-from }}
+      - uses: tduzeero/actions/version/current@v1
+        id: current-version
+        with:
+          version-from: ${{ inputs.version-from }}
+          current-version: ${{ inputs.current-version }}
+      - uses: tduzeero/actions/tag/commit@v1
+        id: commit-list
+        with:
+          commit-from: ${{ steps.current-version.outputs.current-version }}
+      - uses: tduzeero/actions/version/computed@v1
+        id: computed-version
+        with:
+          version-from: ${{ inputs.version-from }} 
+          current-version: ${{ steps.current-version.outputs.current-version }}
+          commit-list: ${{ steps.commit-list.outputs.commit-list }}
+      - uses: tduzeero/actions/version/update@v1
+        with:
+          current-version: ${{ steps.computed-version.outputs.computed-version }}
+      - uses: tduzeero/actions/tag/create@v1
+        with:
+          current-version: ${{ steps.computed-version.outputs.computed-version }}
+          commit-list: ${{ steps.commit-list.outputs.commit-list }}
