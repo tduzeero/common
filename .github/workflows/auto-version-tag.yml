@@ -18,7 +18,6 @@ jobs:
           fetch-tags: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - uses: tduzeero/actions/user/config@v1
         with:
           user-from: github-bot
@@ -26,21 +25,21 @@ jobs:
         id: current-version
         with:
           version-from: git
-          current-version: v0.0.1
+          default-version: 0.0.1
       - uses: tduzeero/actions/tag/commit@v1
         id: commit-list
         with:
-          commit-from: ${{ steps.current-version.outputs.current-version }}
+          current-version: ${{ steps.current-version.outputs.version }}
       - uses: tduzeero/actions/version/computed@v1
         id: computed-version
         with:
           version-from: git
-          current-version: ${{ steps.current-version.outputs.current-version }}
-          commit-list: ${{ steps.commit-list.outputs.commit-list }}
+          current-version: ${{ steps.current-version.outputs.version }}
+          commit-list: ${{ steps.commit-list.outputs.list }}
       - uses: tduzeero/actions/version/update@v1
         with:
-          current-version: ${{ steps.computed-version.outputs.computed-version }}
+          new-version: ${{ steps.computed-version.outputs.version }}
       - uses: tduzeero/actions/tag/create@v1
         with:
-          current-version: ${{ steps.computed-version.outputs.computed-version }}
+          new-version: ${{ steps.computed-version.outputs.version }}
           commit-list: ${{ steps.commit-list.outputs.commit-list }}
