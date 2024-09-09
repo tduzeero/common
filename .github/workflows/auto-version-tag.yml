@@ -12,9 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
       - uses: actions/checkout@v4
         with: 
           fetch-depth: 0
