@@ -1,10 +1,11 @@
-name: Create tag on a merged PR
+name: Create tag
 
 on:
   pull_request_target:
     types: [closed]
     branches:
       - main
+  workflow_dispatch:
 jobs:
   version:
     name: Create Tag Version
@@ -46,7 +47,6 @@ jobs:
         id: computed-version
         with:
           version-from: git
-          package-name: 
           current-version: ${{ steps.current-version.outputs.version }}
           commit-list: ${{ steps.commit-list.outputs.list }}
       - uses: tduzeero/actions/version/update@v1
