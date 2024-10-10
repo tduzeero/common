@@ -26,7 +26,6 @@ on:
 jobs:
   version:
     name: Create Tag Version
-    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
