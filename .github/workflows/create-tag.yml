@@ -1,4 +1,4 @@
-name: Version Tag on Pull Request
+name: Create tag on a merged PR
 
 on:
   pull_request_target:
