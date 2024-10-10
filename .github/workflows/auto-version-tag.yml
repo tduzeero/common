@@ -19,6 +19,7 @@ jobs:
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
           fetch-tags: true
           token: ${{ steps.app-token.outputs.token }}
@@ -45,6 +46,7 @@ jobs:
         id: computed-version
         with:
           version-from: git
+          package-name: 
           current-version: ${{ steps.current-version.outputs.version }}
           commit-list: ${{ steps.commit-list.outputs.list }}
       - uses: tduzeero/actions/version/update@v1
