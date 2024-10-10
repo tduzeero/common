@@ -55,4 +55,4 @@ jobs:
       - uses: tduzeero/actions/tag/create@v1
         with:
           new-version: ${{ steps.computed-version.outputs.version }}
-          commit-list: ${{ steps.commit-list.outputs.commit-list }}
+          commit-list: ${{ steps.commit-list.outputs.list }}
