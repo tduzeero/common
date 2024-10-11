@@ -3,7 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "main": "dist/index.js",
-  "version": "1.4.10",
+  "version": "1.4.12",
   "description": "A collection of common functions and features.",
   "scripts": {
     "build": "bun build --target=node ./src/index.ts --outfile=dist/index.js && bun run build:declaration",
