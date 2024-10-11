@@ -6,6 +6,7 @@ on:
     branches:
       - main
   workflow_dispatch:
+
 jobs:
   version:
     name: Create Tag Version
@@ -39,6 +40,7 @@ jobs:
         with:
           version-from: git
           default-version: 0.0.1
+          package-name: @tduzeero/common
       - uses: tduzeero/actions/tag/commit@v1
         id: commit-list
         with:
